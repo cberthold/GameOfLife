@@ -31,10 +31,27 @@ namespace GameOfLife
 
             Cells = new List<Cell>();
             CellMapping = new Dictionary<Point, Cell>();
-            BuildBoard();
-            SetupImage();
-            DrawFirstGeneration();
 
+            RebuildBoard();
+            SetupImage();
+            ResetBoardAndDrawFirstGeneration();
+
+        }
+
+        public void ResetBoardAndDrawFirstGeneration()
+        {
+
+            DrawFirstGeneration();
+        }
+
+        private void ResetBoard()
+        {
+            foreach(var cell in Cells)
+            {
+                cell
+                    .SetNextIsAlive(false)
+                    .SwapIsAlive();
+            }
         }
 
         private void SetupImage()
@@ -155,7 +172,7 @@ namespace GameOfLife
 
         }
 
-        private void BuildBoard()
+        private void RebuildBoard()
         {
             Cell north = null;
             Cell nextNorth = null;

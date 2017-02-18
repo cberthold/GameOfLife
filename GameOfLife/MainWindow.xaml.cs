@@ -29,19 +29,47 @@ namespace GameOfLife
         private Task generator;
         private CancellationTokenSource tokenSource;
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void ButtonRun_Click(object sender, RoutedEventArgs e)
+        {
+            StopTasks();
+            RunGenerations();
+        }
+
+        private void ButtonStop_Click(object sender, RoutedEventArgs e)
+        {
+            StopTasks();
+        }
+
+        private void ButtonReset_Click(object sender, RoutedEventArgs e)
+        {
+            StopTasks();
+            ctl1.ResetBoardAndDrawFirstGeneration();
+        }
+
+
+
+        private void RunGenerations()
         {
             tokenSource = new CancellationTokenSource();
             generator = new TaskFactory().StartNew(async () =>
-           {
-               var token = tokenSource.Token;
-               while (!token.IsCancellationRequested)
-               {
-                   await ctl1.DrawNextGenerationAsync();
+            {
+                var token = tokenSource.Token;
+                while (!token.IsCancellationRequested)
+                {
+                    await ctl1.DrawNextGenerationAsync();
 
-                   await Task.Delay(50);
-               }
-           }, tokenSource.Token);
+                    await Task.Delay(50, token);
+                }
+            }, tokenSource.Token);
+        }
+
+        private void StopTasks()
+        {
+            if (tokenSource != null)
+            {
+                tokenSource.Cancel();
+                tokenSource = new CancellationTokenSource();
+            }
         }
     }
 }

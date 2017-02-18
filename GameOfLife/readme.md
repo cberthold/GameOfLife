@@ -33,10 +33,9 @@ value.
 
 
 ## TODO ( maybe :) )
-* Add a cancel button
-* Add a reset button
-* Add a pause button
-* Add generation number
+* <s>Add a stop button</s>
+* <s>Add a reset button</s>
+* Add generation number (display)
 * Add delay adjustments (currently 50ms)
 * Add image scaling
 * Add ability to change colors, fill and size of blocks
@@ -53,3 +52,5 @@ value.
 * Add momento's of cell states
   * go back in time and see how you got to your current state
 * Add Unit Tests
+* MVVM
+* Dependency Injection (this should have been first but I'll bootstrap later)

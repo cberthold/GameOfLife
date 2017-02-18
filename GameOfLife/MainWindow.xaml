@@ -7,8 +7,25 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="512.764" Width="795.454">
     <Grid>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="706,457,0,0" VerticalAlignment="Top" Width="74" Click="button_Click"/>
-        <local:GameOfLifeControl x:Name="ctl1" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="442" Width="770"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <local:GameOfLifeControl x:Name="ctl1" Grid.Row="0"  VerticalAlignment="Top" Height="442"/>
 
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="120" />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="ButtonReset" Content="Reset" Grid.Column="1" HorizontalAlignment="Right" Padding="30,0,30,0" Margin="5" Click="ButtonReset_Click"/>
+            <Button x:Name="ButtonStop" Content="Stop" Grid.Column="2" HorizontalAlignment="Right" Padding="30,0,30,0" Margin="5" Click="ButtonStop_Click"/>
+            <Button x:Name="ButtonRun" Content="Run" Grid.Column="3" HorizontalAlignment="Right" Padding="30,0,30,0" Margin="5" Click="ButtonRun_Click"/>
+        </Grid>
     </Grid>
 </Window>
