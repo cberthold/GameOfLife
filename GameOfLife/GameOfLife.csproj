@@ -72,6 +72,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Cell.cs" />
+    <Compile Include="Patterns\AcornPattern.cs" />
+    <Compile Include="Patterns\BeehivePattern.cs" />
+    <Compile Include="Patterns\BlinkerPattern.cs" />
+    <Compile Include="Patterns\DiehardPattern.cs" />
+    <Compile Include="Patterns\GliderPattern.cs" />
+    <Compile Include="Patterns\IPattern.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -82,6 +88,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Patterns\LightWeightSpaceShipPattern.cs" />
+    <Compile Include="Patterns\PentaDecathlonPattern.cs" />
+    <Compile Include="Patterns\RPentominoPattern.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

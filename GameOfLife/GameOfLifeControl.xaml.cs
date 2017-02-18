@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameOfLife.Patterns;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -92,193 +93,52 @@ namespace GameOfLife
 
                 var nextShape = random.Next(1, 10);
                 DrawRandomShape(nextShape, point);
-               
+
             }
 
             foreach (var cell in Cells)
             {
                 cell.CheckRules();
             }
-            
+
             DrawImage();
         }
 
         private void DrawRandomShape(int shape, Point point)
         {
-            switch(shape)
+            var cell = CellMapping[point];
+            IPattern pattern = null;
+
+            switch (shape)
             {
                 case 1:
-                    DrawBeehive(point);
+                    pattern = new BeehivePattern();
                     break;
                 case 2:
-                    DrawGlider(point);
+                    pattern = new GliderPattern();
                     break;
                 case 3:
-                    DrawBlinker(point);
+                    pattern = new BlinkerPattern();
                     break;
                 case 4:
-                    DrawPentaDecathlon(point);
+                    pattern = new PentaDecathlonPattern();
                     break;
                 case 5:
-                    DrawLightWeightSpaceShip(point);
+                    pattern = new LightWeightSpaceShipPattern();
                     break;
                 case 6:
-                    DrawRPentomino(point);
+                    pattern = new RPentominoPattern();
                     break;
                 case 7:
-                    DrawAcorn(point);
+                    pattern = new AcornPattern();
                     break;
                 case 8:
-                    DrawDiehard(point);
+                    pattern = new DiehardPattern();
                     break;
             }
-        }
 
-        private void DrawAcorn(Point point)
-        {
-            var cell = CellMapping[point];
+            pattern?.DrawPattern(cell);
 
-            cell.SetNextIsAlive(true)
-                .MarkEastAlive()
-                .North
-                .MarkNorthAlive()
-                .SouthEast
-                .MarkEastAlive()
-                .MarkSouthEastAlive()
-                .MarkEastAlive()
-                .MarkEastAlive();
-        }
-
-
-        private void DrawDiehard(Point point)
-        {
-            var cell = CellMapping[point];
-
-            cell.SetNextIsAlive(true)
-                .MarkEastAlive()
-                .MarkSouthAlive()
-                .East
-                .East
-                .East
-                .MarkEastAlive()
-                .MarkEastAlive()
-                .MarkEastAlive()
-                .NorthWest
-                .MarkNorthAlive();
-
-        }
-        private void DrawRPentomino(Point point)
-        {
-            var cell = CellMapping[point];
-
-            cell
-                .MarkSouthAlive()
-                .MarkSouthEastAlive()
-                .MarkNorthAlive()
-                .MarkNorthAlive()
-                .MarkEastAlive();
-
-        }
-
-        private void DrawLightWeightSpaceShip(Point point)
-        {
-            var cell = CellMapping[point];
-
-            var row1 = cell
-                .MarkEastAlive()
-                .MarkEastAlive();
-
-            var row2 = cell
-                .MarkSouthAlive()
-                .MarkEastAlive()
-                .MarkEastAlive()
-                .MarkEastAlive();
-
-            var row3 = cell
-                .South
-                .MarkSouthAlive()
-                .MarkEastAlive()
-                .East
-                .MarkEastAlive()
-                .MarkEastAlive();
-
-            var row4 = cell
-                .South
-                .South
-                .South
-                .East
-                .MarkEastAlive()
-                .MarkEastAlive();
-
-        }
-
-        private void DrawPentaDecathlon(Point point)
-        {
-            var cell = CellMapping[point];
-            
-            var col1 = cell.MarkWestAlive()
-                .MarkSouthAlive()
-                .MarkSouthAlive()
-                .MarkSouthAlive()
-                .MarkSouthAlive()
-                .MarkSouthAlive()
-                .MarkSouthAlive()
-                .MarkSouthAlive();
-
-            var col2 = cell.SetNextIsAlive(true)
-                .South
-                .MarkSouthAlive()
-                .MarkSouthAlive()
-                .MarkSouthAlive()
-                .MarkSouthAlive()
-                .South
-                .MarkSouthAlive();
-
-            var col3 = cell.MarkEastAlive()
-                .MarkSouthAlive()
-                .MarkSouthAlive()
-                .MarkSouthAlive()
-                .MarkSouthAlive()
-                .MarkSouthAlive()
-                .MarkSouthAlive()
-                .MarkSouthAlive();
-        }
-
-        private void DrawBlinker(Point point)
-        {
-            var cell = CellMapping[point];
-
-            cell.SetNextIsAlive(true);
-
-            cell.MarkEastAlive()
-                .MarkEastAlive();
-        }
-
-        private void DrawGlider(Point point)
-        {
-            var cell = CellMapping[point];
-
-            cell.SetNextIsAlive(true);
-
-            cell.MarkEastAlive()
-                .MarkEastAlive()
-                .MarkNorthAlive()
-                .MarkNorthWestAlive();
-        }
-
-        private void DrawBeehive(Point point)
-        {
-            var cell = CellMapping[point];
-
-            cell.SetNextIsAlive(true);
-
-            cell.MarkNorthEastAlive()
-                .MarkEastAlive()
-                .MarkSouthEastAlive();
-
-            cell.MarkSouthEastAlive()
-                .MarkEastAlive()
-                .MarkNorthEastAlive();
         }
 
         public async Task DrawNextGenerationAsync()
@@ -320,20 +180,20 @@ namespace GameOfLife
                     }
 
                     // wrap the east and west edges
-                    if(x == BLOCK_SIZE)
+                    if (x == BLOCK_SIZE)
                     {
                         CellMapping[new Point(1, y)].SetWesternNeighbor(cell);
                     }
 
                     // wrap the north and south edges
-                    if(y == BLOCK_SIZE)
+                    if (y == BLOCK_SIZE)
                     {
                         CellMapping[new Point(x, 1)].SetNorthernNeighbor(cell);
                     }
 
                 }
                 north = nextNorth;
-                
+
             }
 
             var last = Cells.LastOrDefault();

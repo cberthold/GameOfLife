@@ -43,8 +43,8 @@ value.
 * Add inputs for allowing choosing of randomization options
   * number of random patterns
   * pick allowed patterns
-* Move patterns from individual methods into Strategy classes
-  * Allows an easier plugin module
+* <s>Move patterns from individual methods into Strategy classes</s>
+  * <s>Allows an easier plugin module</s>
 * Create a means of allowing manual input of patterns onto the neighborhood
   * Currently patterns are just a Point
   * and; a Pattern type
